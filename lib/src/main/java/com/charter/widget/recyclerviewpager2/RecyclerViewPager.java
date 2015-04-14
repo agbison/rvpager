@@ -41,13 +41,11 @@ public class RecyclerViewPager extends RecyclerViewEx {
     public static final int SCROLL_NONE = 0;
     public static final int FLING_SCALE_DOWN_FACTOR = 0;
     public static final int FLING_SCALE_SIDE_FACTOR = 0;
+    public static final int totalCount = 100; //MAGIC NUMBER FOR DEMO
     private Handler mHandler;
     public int mDisplayPadding;
 
-
-
     RecyclerViewPagerAdapter mViewPagerAdapter;
-
 
     public RecyclerViewPager(Context context) {
         super(context);
@@ -110,10 +108,7 @@ public class RecyclerViewPager extends RecyclerViewEx {
         }
     }
     public void scrollOnce() {
-        RecyclerViewPagerAdapter adapter = getWrapperAdapter();
         int currentItem = getCenterXChildPosition();
-        int totalCount = 100;
-
         int nextItem = (direction == LEFT) ? --currentItem : ++currentItem;
         if (nextItem < 0) {
             if (isCycle) {
@@ -175,7 +170,7 @@ public class RecyclerViewPager extends RecyclerViewEx {
         private final WeakReference<RecyclerViewPager> autoScrollViewPager;
 
         public MyHandler(RecyclerViewPager autoScrollViewPager) {
-            this.autoScrollViewPager = new WeakReference<RecyclerViewPager>(autoScrollViewPager);
+            this.autoScrollViewPager = new WeakReference<>(autoScrollViewPager);
         }
 
         @Override
