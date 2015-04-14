@@ -70,11 +70,11 @@ public class RecyclerViewPager extends RecyclerViewEx {
         isAutoScroll = true;
         sendScrollMessage((long)(interval + scroller.getDuration() / autoScrollFactor * swipeScrollFactor));
     }
-
-    public void startAutoScroll(int delayTimeInMills) {
-        isAutoScroll = true;
-        sendScrollMessage(delayTimeInMills);
-    }
+    //Don't use this API set globally per design leaving since it works fine
+//    public void startAutoScroll(int delayTimeInMills) {
+//        isAutoScroll = true;
+//        sendScrollMessage(delayTimeInMills);
+//    }
 
     public void stopAutoScroll() {
         isAutoScroll = false;
