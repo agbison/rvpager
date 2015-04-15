@@ -41,7 +41,6 @@ public class RecyclerViewPager extends RecyclerViewEx {
     public static final int SCROLL_NONE = 0;
     public static final int FLING_SCALE_DOWN_FACTOR = 0;
     public static final int FLING_SCALE_SIDE_FACTOR = 0;
-    public static final int totalCount = 100; //MAGIC NUMBER FOR DEMO
     private Handler mHandler;
     public int mDisplayPadding;
 
@@ -115,7 +114,7 @@ public class RecyclerViewPager extends RecyclerViewEx {
                 scrollToPosition(0);
                 Log.d(LOG_TAG, "Cycling");
             }
-        } else if (nextItem == totalCount) {
+        } else if (nextItem == mViewPagerAdapter.getItemCount()) {
             if (isCycle) {
                 scrollToPosition(0);
                 Log.d(LOG_TAG, "End of List");
