@@ -30,17 +30,13 @@ public class RecyclerViewPager extends RecyclerView {
     private long interval = DEFAULT_INTERVAL;
     private int direction = RIGHT;
     private boolean isCycle = true;
-    private boolean stopScrollWhenTouch = true;
     private int slideMode = SLIDE_MODE_TO_PARENT;
     private double autoScrollFactor = 1.0;
     private double swipeScrollFactor = 1.0;
     private boolean isAutoScroll = false;
     private boolean isStopByTouch = true;
-    private float touchX = 0f, downX = 0f;
     private ValueDurationScroller scroller = null;
     public static final int SCROLL_NONE = 0;
-    public static final int FLING_SCALE_DOWN_FACTOR = 0;
-    public static final int FLING_SCALE_SIDE_FACTOR = 1;
     private Handler mHandler;
     public int mDisplayPadding;
 
@@ -64,7 +60,6 @@ public class RecyclerViewPager extends RecyclerView {
     private void init() {
         mHandler = new MyHandler(this);
         setViewPagerScroller();
-    //    adjustPosition(0);
     }
 
     public void startAutoScroll() {
@@ -127,55 +122,6 @@ public class RecyclerViewPager extends RecyclerView {
             Log.d(LOG_TAG, "Is Auto Scrolling to position: " + getCenterXChildPosition());
         }
     }
-
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        int action = MotionEventCompat.getActionMasked(ev);
-//
-//        if (stopScrollWhenTouch) {
-//            if ((action == MotionEvent.ACTION_DOWN) && isAutoScroll) {
-//                isStopByTouch = true;
-//                Log.d("pressed", "down");
-//                stopAutoScroll();
-//            } else if (ev.getAction() == MotionEvent.ACTION_UP && isStopByTouch) {
-//               Log.d("scrolled", "over");
-//                startAutoScroll();
-//            }
-//        }
-//
-//        if (slideMode == SLIDE_MODE_TO_PARENT || slideMode == SLIDE_MODE_CYCLE) {
-//            touchX = ev.getX();
-//            if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-//                downX = touchX;
-//            }
-//            int currentItem = getCenterXChildPosition();
-//            RecyclerViewPagerAdapter adapter = getWrapperAdapter();
-//            int pageCount = adapter == null ? 0 : adapter.getItemCount();
-//            if ((currentItem == 0 && downX <= touchX) || (currentItem == pageCount - 1 && downX >= touchX)) {
-//                if (slideMode == SLIDE_MODE_TO_PARENT) {
-//                    getParent().requestDisallowInterceptTouchEvent(false);
-//                } else {
-//                    if (pageCount > 1) {
-//                        scrollToPosition(pageCount - currentItem - 1);
-//                    }
-//                    getParent().requestDisallowInterceptTouchEvent(true);
-//                }
-//                return super.dispatchTouchEvent(ev);
-//            }
-//        }
-//        getParent().requestDisallowInterceptTouchEvent(true);
-//        int currentItem =  getCenterXChildPosition();
-//
-//        int nextItem = ++currentItem;
-//
-//        Log.d("damn", "this" + currentItem);
-//      //  adjustPosition(currentItem);
-//        smoothScrollToPosition(nextItem);
-//        Log.d("next", "item " + nextItem + slideMode);
-//        return super.dispatchTouchEvent(ev);
-//    }
-
-
 
 
     private static class MyHandler extends Handler {
@@ -248,7 +194,7 @@ public class RecyclerViewPager extends RecyclerView {
 
         final boolean ret = super.onTouchEvent(e);
         final LayoutManager lm = getLayoutManager();
-        
+
             if (lm instanceof LockLayoutManager
                     && (e.getAction() == MotionEvent.ACTION_UP ||
                     e.getAction() == MotionEvent.ACTION_CANCEL)
