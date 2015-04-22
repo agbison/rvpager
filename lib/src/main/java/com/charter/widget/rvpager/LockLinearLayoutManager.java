@@ -14,7 +14,8 @@ import android.view.ViewConfiguration;
  */
 public class LockLinearLayoutManager extends LinearLayoutManager implements LockLayoutManager {
 
-    private static final float INFLEXION = 0.35f; // Tension lines cross at (INFLEXION, 1)
+    //These statics are from android.widget.scroller
+    private static final float INFLEXION = 0.35f;
     private static float DECELERATION_RATE = (float) (Math.log(0.78) / Math.log(0.9));
     private static double FRICTION = 0.84;
 

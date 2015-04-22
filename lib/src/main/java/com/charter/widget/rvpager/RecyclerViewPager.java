@@ -30,12 +30,12 @@ public class RecyclerViewPager extends RecyclerView {
     private long interval = DEFAULT_INTERVAL;
     private int direction = RIGHT;
     private boolean isCycle = true;
-    private boolean stopScrollWhenTouch = false;
+    private boolean stopScrollWhenTouch = true;
     private int slideMode = SLIDE_MODE_TO_PARENT;
     private double autoScrollFactor = 1.0;
     private double swipeScrollFactor = 1.0;
     private boolean isAutoScroll = false;
-    private boolean isStopByTouch = false;
+    private boolean isStopByTouch = true;
     private float touchX = 0f, downX = 0f;
     private ValueDurationScroller scroller = null;
     public static final int SCROLL_NONE = 0;
@@ -248,16 +248,17 @@ public class RecyclerViewPager extends RecyclerView {
 
         final boolean ret = super.onTouchEvent(e);
         final LayoutManager lm = getLayoutManager();
+        
+            if (lm instanceof LockLayoutManager
+                    && (e.getAction() == MotionEvent.ACTION_UP ||
+                    e.getAction() == MotionEvent.ACTION_CANCEL)
+                    && getScrollState() == SCROLL_STATE_IDLE) {
+                smoothScrollToPosition(((LockLayoutManager) lm).getFixScrollPos());
+            }
 
-        if (lm instanceof LockLayoutManager
-                && (e.getAction() == MotionEvent.ACTION_UP ||
-                e.getAction() == MotionEvent.ACTION_CANCEL)
-                && getScrollState() == SCROLL_STATE_IDLE) {
-            smoothScrollToPosition(((LockLayoutManager) lm).getFixScrollPos());
+            return ret;
         }
 
-        return ret;
-    }
 
     public RecyclerViewPagerAdapter getWrapperAdapter() {
         return mViewPagerAdapter;
